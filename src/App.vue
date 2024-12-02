@@ -1,0 +1,205 @@
+<script setup>
+</script>
+
+<template>
+  <main>
+    <header>
+      <nav class="shadow navbar bg-base-100">
+        <div class="flex-1">
+          <a class="text-xl btn btn-ghost"
+            ><i class="fas fa-gem"></i> 賺很大商店</a
+          >
+        </div>
+        <div class="flex-none">
+          <ul class="px-1 menu menu-horizontal">
+            <li>
+              <a
+                href="https://github.com/5xTraining/shopping-cat-v3"
+                target="_blank"
+                ><i class="fa-brands fa-github"></i> GitHub</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <section class="container px-6 py-3 mx-auto">
+      <p class="px-6 py-2 bg-yellow-400 rounded-full">請以認養取代購買！</p>
+      <div
+        class="grid grid-cols-1 gap-3 my-2 lg:grid-cols-6 sm:grid-cols-3"
+      >
+        <!-- cat start -->
+        <div class="shadow card bg-base-100">
+          <figure>
+            <img src="/images/cat001.jpg" class="select-none" alt="" />
+          </figure>
+          <div class="card-body">
+            <h5 class="card-title">老大</h5>
+            <p>$20</p>
+            <div class="justify-end card-actions">
+              <button class="btn btn-primary">
+                <i class="fas fa-cat"></i> 認養
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- cat end -->
+
+        <!-- cat start -->
+        <div class="shadow card bg-base-100">
+          <figure>
+            <img src="/images/cat002.jpg" class="select-none" alt="" />
+          </figure>
+          <div class="card-body">
+            <h5 class="card-title">貝貝</h5>
+            <p>$15</p>
+            <div class="justify-end card-actions">
+              <button class="btn btn-primary">
+                <i class="fas fa-cat"></i> 認養
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- cat end -->
+
+        <!-- cat start -->
+        <div class="shadow card bg-base-100">
+          <figure>
+            <img src="/images/cat003.jpg" class="select-none" alt="" />
+          </figure>
+          <div class="card-body">
+            <h5 class="card-title">老虎</h5>
+            <p>$10</p>
+            <div class="justify-end card-actions">
+              <button class="btn btn-primary">
+                <i class="fas fa-cat"></i> 認養
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- cat end -->
+
+        <!-- cat start -->
+        <div class="shadow card bg-base-100">
+          <figure>
+            <img src="/images/cat004.jpg" class="select-none" alt="" />
+          </figure>
+          <div class="card-body">
+            <h5 class="card-title">胖胖</h5>
+            <p>$8.5</p>
+            <div class="justify-end card-actions">
+              <button class="btn btn-primary">
+                <i class="fas fa-cat"></i> 認養
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- cat end -->
+
+        <!-- cat start -->
+        <div class="shadow card bg-base-100">
+          <figure>
+            <img src="/images/cat005.jpg" class="select-none" alt="" />
+          </figure>
+          <div class="card-body">
+            <h5 class="card-title">小花</h5>
+            <p>$9.99</p>
+            <div class="justify-end card-actions">
+              <button class="btn btn-primary">
+                <i class="fas fa-cat"></i> 認養
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- cat end -->
+
+        <!-- cat start -->
+        <div class="shadow card bg-base-100">
+          <figure>
+            <img src="/images/cat006.jpg" class="select-none" alt="" />
+          </figure>
+          <div class="card-body">
+            <h5 class="card-title">黑臉</h5>
+            <p>$12.5</p>
+            <div class="justify-end card-actions">
+              <button class="btn btn-primary">
+                <i class="fas fa-cat"></i> 認養
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- cat end -->
+      </div>
+
+      <section class="px-8 mt-12">
+        <h2 class="text-3xl font-bold">認養清單</h2>
+        <table class="table my-2">
+          <thead>
+            <tr class="text-lg">
+              <th>名字</th>
+              <th>數量</th>
+              <th>手續費</th>
+              <th>小計</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- item start -->
+            <tr class="text-lg">
+              <td>老大</td>
+              <td>
+                <input
+                  type="number"
+                  value="1"
+                  min="1"
+                  class="input input-bordered"
+                />
+              </td>
+              <td>$20</td>
+              <td>$20</td>
+              <td>
+                <button class="btn btn-xs btn-primary">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+            <!-- item end -->
+
+            <!-- item start -->
+            <tr class="text-lg">
+              <td>胖胖</td>
+              <td>
+                <input
+                  type="number"
+                  value="1"
+                  min="1"
+                  class="input input-bordered"
+                />
+              </td>
+              <td>$8.5</td>
+              <td>$8.5</td>
+              <td>
+                <button class="btn btn-xs btn-primary">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+            <!-- item end -->
+          </tbody>
+          <tfoot class="text-lg bg-slate-100">
+            <tr>
+              <td colspan="2"></td>
+              <td>總價</td>
+              <td class="font-bold">$28.50</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+        <button class="btn btn-primary">
+          <i class="fas fa-baby-carriage"></i> 清空認養清單
+        </button>
+      </section>
+    </section>
+  </main>
+</template>
