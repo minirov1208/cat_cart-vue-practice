@@ -1,4 +1,13 @@
 <script setup>
+import { ref } from "vue";
+
+const catList = ref([]);
+
+fetch("/data/cats.json")
+  .then((res) => res.json())
+  .then((data) => {
+    catList.value = data.cats;
+  });
 </script>
 
 <template>
@@ -24,11 +33,10 @@
       </nav>
     </header>
 
+    <pre>{{ catList }}</pre>
     <section class="container px-6 py-3 mx-auto">
       <p class="px-6 py-2 bg-yellow-400 rounded-full">請以認養取代購買！</p>
-      <div
-        class="grid grid-cols-1 gap-3 my-2 lg:grid-cols-6 sm:grid-cols-3"
-      >
+      <div class="grid grid-cols-1 gap-3 my-2 lg:grid-cols-6 sm:grid-cols-3">
         <!-- cat start -->
         <div class="shadow card bg-base-100">
           <figure>
