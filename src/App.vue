@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const catList = ref([]);
 
@@ -8,6 +8,36 @@ fetch("/data/cats.json")
   .then((data) => {
     catList.value = data.cats;
   });
+
+const cart = ref([]);
+const addToCart = (cat) => {
+  const catindex = cart.value.findIndex((d) => d.name === cat.name);
+  if (catindex == -1) {
+    cart.value.push({
+      name: cat.name,
+      price: cat.price,
+      qty: 1,
+    });
+  } else {
+    cart.value[catindex].qty++;
+  }
+};
+
+const removecart = () => {
+  cart.value = [];
+};
+
+const removecat = (cat) => {
+  cart.value = cart.value.filter((d) => d.name != cat.name);
+};
+
+const totalPrice = computed(() => {
+  let total = 0;
+  for (let i = 0; i < cart.value.length; i++) {
+    total += cart.value[i].price * cart.value[i].qty;
+  }
+  return total;
+});
 </script>
 
 <template>
@@ -33,105 +63,19 @@ fetch("/data/cats.json")
       </nav>
     </header>
 
-    <pre>{{ catList }}</pre>
     <section class="container px-6 py-3 mx-auto">
       <p class="px-6 py-2 bg-yellow-400 rounded-full">請以認養取代購買！</p>
       <div class="grid grid-cols-1 gap-3 my-2 lg:grid-cols-6 sm:grid-cols-3">
         <!-- cat start -->
-        <div class="shadow card bg-base-100">
+        <div v-for="cat in catList" class="shadow card bg-base-100">
           <figure>
-            <img src="/images/cat001.jpg" class="select-none" alt="" />
+            <img :src="`/images/${cat.picture}`" class="select-none" alt="" />
           </figure>
           <div class="card-body">
-            <h5 class="card-title">老大</h5>
-            <p>$20</p>
+            <h5 class="card-title">{{ cat.name }}</h5>
+            <p>${{ cat.price }}</p>
             <div class="justify-end card-actions">
-              <button class="btn btn-primary">
-                <i class="fas fa-cat"></i> 認養
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- cat end -->
-
-        <!-- cat start -->
-        <div class="shadow card bg-base-100">
-          <figure>
-            <img src="/images/cat002.jpg" class="select-none" alt="" />
-          </figure>
-          <div class="card-body">
-            <h5 class="card-title">貝貝</h5>
-            <p>$15</p>
-            <div class="justify-end card-actions">
-              <button class="btn btn-primary">
-                <i class="fas fa-cat"></i> 認養
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- cat end -->
-
-        <!-- cat start -->
-        <div class="shadow card bg-base-100">
-          <figure>
-            <img src="/images/cat003.jpg" class="select-none" alt="" />
-          </figure>
-          <div class="card-body">
-            <h5 class="card-title">老虎</h5>
-            <p>$10</p>
-            <div class="justify-end card-actions">
-              <button class="btn btn-primary">
-                <i class="fas fa-cat"></i> 認養
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- cat end -->
-
-        <!-- cat start -->
-        <div class="shadow card bg-base-100">
-          <figure>
-            <img src="/images/cat004.jpg" class="select-none" alt="" />
-          </figure>
-          <div class="card-body">
-            <h5 class="card-title">胖胖</h5>
-            <p>$8.5</p>
-            <div class="justify-end card-actions">
-              <button class="btn btn-primary">
-                <i class="fas fa-cat"></i> 認養
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- cat end -->
-
-        <!-- cat start -->
-        <div class="shadow card bg-base-100">
-          <figure>
-            <img src="/images/cat005.jpg" class="select-none" alt="" />
-          </figure>
-          <div class="card-body">
-            <h5 class="card-title">小花</h5>
-            <p>$9.99</p>
-            <div class="justify-end card-actions">
-              <button class="btn btn-primary">
-                <i class="fas fa-cat"></i> 認養
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- cat end -->
-
-        <!-- cat start -->
-        <div class="shadow card bg-base-100">
-          <figure>
-            <img src="/images/cat006.jpg" class="select-none" alt="" />
-          </figure>
-          <div class="card-body">
-            <h5 class="card-title">黑臉</h5>
-            <p>$12.5</p>
-            <div class="justify-end card-actions">
-              <button class="btn btn-primary">
+              <button @click="addToCart(cat)" class="btn btn-primary">
                 <i class="fas fa-cat"></i> 認養
               </button>
             </div>
@@ -142,7 +86,8 @@ fetch("/data/cats.json")
 
       <section class="px-8 mt-12">
         <h2 class="text-3xl font-bold">認養清單</h2>
-        <table class="table my-2">
+        <div v-if="cart.length == 0">請選擇貓咪</div>
+        <table v-else class="table my-2">
           <thead>
             <tr class="text-lg">
               <th>名字</th>
@@ -154,41 +99,20 @@ fetch("/data/cats.json")
           </thead>
           <tbody>
             <!-- item start -->
-            <tr class="text-lg">
-              <td>老大</td>
+            <tr v-for="cat in cart" class="text-lg">
+              <td>{{ cat.name }}</td>
               <td>
                 <input
+                  v-model="cat.qty"
                   type="number"
-                  value="1"
                   min="1"
                   class="input input-bordered"
                 />
               </td>
-              <td>$20</td>
-              <td>$20</td>
+              <td>${{ cat.price }}</td>
+              <td>${{ cat.price * cat.qty }}</td>
               <td>
-                <button class="btn btn-xs btn-primary">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </td>
-            </tr>
-            <!-- item end -->
-
-            <!-- item start -->
-            <tr class="text-lg">
-              <td>胖胖</td>
-              <td>
-                <input
-                  type="number"
-                  value="1"
-                  min="1"
-                  class="input input-bordered"
-                />
-              </td>
-              <td>$8.5</td>
-              <td>$8.5</td>
-              <td>
-                <button class="btn btn-xs btn-primary">
+                <button @click="removecat(cat)" class="btn btn-xs btn-primary">
                   <i class="fas fa-trash-alt"></i>
                 </button>
               </td>
@@ -199,12 +123,12 @@ fetch("/data/cats.json")
             <tr>
               <td colspan="2"></td>
               <td>總價</td>
-              <td class="font-bold">$28.50</td>
+              <td class="font-bold">${{ totalPrice }}</td>
               <td></td>
             </tr>
           </tfoot>
         </table>
-        <button class="btn btn-primary">
+        <button @click="removecart()" class="btn btn-primary">
           <i class="fas fa-baby-carriage"></i> 清空認養清單
         </button>
       </section>
